@@ -30,7 +30,6 @@
             margin-bottom: 12px;
         }
 
-        /* label อยู่ซ้าย ช่องกรอกอยู่ขวา */
         .form-row > label {
             display: inline-block;
             width: 130px;
@@ -54,7 +53,6 @@
             height: 120px;
         }
 
-        /* เวลา focus */
         input:focus,
         select:focus,
         textarea:focus {
@@ -63,7 +61,6 @@
             box-shadow: 0 0 0 3px rgba(102,166,255,0.3);
         }
 
-        /* ปุ่ม */
         .buttons {
             margin-top: 15px;
         }
@@ -85,6 +82,12 @@
             background: #66a6ff;
             color: white;
         }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -92,49 +95,47 @@
 <div class="container">
     <h1>FORM</h1>
 
-    <form>
+    <form id="myForm">
         <div class="form-row">
             <label for="fname">ชื่อ</label>
-            <input type="text" id="fname" name="fname">
+            <input type="text" id="fname">
         </div>
 
         <div class="form-row">
             <label for="lname">สกุล</label>
-            <input type="text" id="lname" name="lname">
+            <input type="text" id="lname">
         </div>
 
         <div class="form-row">
             <label for="birth">วัน/เดือน/ปีเกิด</label>
-            <input type="date" id="birth" name="birth">
+            <input type="date" id="birth">
         </div>
 
         <div class="form-row">
             <label for="age">อายุ</label>
-            <input type="number" id="age" name="age">
+            <input type="number" id="age">
         </div>
 
         <div class="form-row">
             <label>เพศ</label>
-            <input type="radio" id="male" name="gender" value="ชาย">
-            <label for="male" style="width:auto;">ชาย</label>
-
-            <input type="radio" id="female" name="gender" value="หญิง">
-            <label for="female" style="width:auto;">หญิง</label>
+            <input type="radio" name="gender" value="ชาย"> ชาย
+            <input type="radio" name="gender" value="หญิง"> หญิง
         </div>
 
         <div class="form-row">
             <label for="photo">รูป</label>
-            <input type="file" id="photo" name="photo">
+            <input type="file" id="photo">
         </div>
 
         <div class="form-row">
             <label for="address">ที่อยู่</label>
-            <textarea id="address" name="address"></textarea>
+            <textarea id="address"></textarea>
         </div>
 
         <div class="form-row">
             <label for="color">สีที่ชอบ</label>
-            <select id="color" name="color">
+            <select id="color">
+                <option value="">-- เลือกสี --</option>
                 <option>สีแดง</option>
                 <option>สีเขียว</option>
                 <option>สีน้ำเงิน</option>
@@ -145,26 +146,62 @@
 
         <div class="form-row">
             <label>แนวเพลงที่ชอบ</label>
-            <input type="radio" id="life" name="music" value="เพื่อชีวิต">
-            <label for="life" style="width:auto;">เพื่อชีวิต</label>
-
-            <input type="radio" id="country" name="music" value="ลูกทุ่ง">
-            <label for="country" style="width:auto;">ลูกทุ่ง</label>
-
-            <input type="radio" id="other" name="music" value="อื่นๆ">
-            <label for="other" style="width:auto;">อื่นๆ</label>
+            <input type="radio" name="music" value="เพื่อชีวิต"> เพื่อชีวิต
+            <input type="radio" name="music" value="ลูกทุ่ง"> ลูกทุ่ง
+            <input type="radio" name="music" value="อื่นๆ"> อื่นๆ
         </div>
 
         <div class="form-row">
-            <input type="checkbox" id="agree" name="agree">
-            <label for="agree" style="width:auto;">ยินยอมให้เก็บข้อมูล</label>
+            <input type="checkbox" id="agree">
+            <label style="width:auto;">ยินยอมให้เก็บข้อมูล</label>
         </div>
 
         <div class="buttons">
             <input type="reset" value="Reset">
             <input type="submit" value="Submit">
         </div>
+
+        <p id="result"></p>
     </form>
 </div>
+
+<script>
+document.getElementById("myForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const fname = document.getElementById("fname").value.trim();
+    const lname = document.getElementById("lname").value.trim();
+    const birth = document.getElementById("birth").value;
+    const age = document.getElementById("age").value;
+    const gender = document.querySelector('input[name="gender"]:checked');
+    const photo = document.getElementById("photo").value;
+    const address = document.getElementById("address").value.trim();
+    const color = document.getElementById("color").value;
+    const music = document.querySelector('input[name="music"]:checked');
+    const agree = document.getElementById("agree").checked;
+
+    const result = document.getElementById("result");
+
+    if (
+        fname === "" ||
+        lname === "" ||
+        birth === "" ||
+        age === "" ||
+        !gender ||
+        photo === "" ||
+        address === "" ||
+        color === "" ||
+        !music ||
+        !agree
+    ) {
+        result.textContent = "❌ Error: กรุณากรอกข้อมูลให้ครบทุกช่อง";
+        result.style.color = "red";
+    } else {
+        result.textContent = "✅ Success: กรอกข้อมูลครบถ้วน";
+        result.style.color = "green";
+    }
+});
+</script>
+
 </body>
 </html>
