@@ -29,3 +29,12 @@ use App\Http\Controllers\WorkshopHtmlFormController;
 Route::get('/workshop-html-form', [WorkshopHtmlFormController::class, 'index'])->name('workshop.form');
 Route::post('/workshop-html-form', [WorkshopHtmlFormController::class, 'store'])->name('workshop.store');
 
+
+Route::namespace('App\Http\Controllers')->group(function () {
+    Route::get('/pokedexs', 'PokedexController@index');
+    Route::get('/pokedex/{id}', 'PokedexController@update');
+    Route::post('/pokedex', 'PokedexController@store');
+    Route::put('/pokedex/{id}', 'PokedexController@update_action');
+    Route::delete('/pokedex/{id}', 'PokedexController@delete_action');
+});
+
